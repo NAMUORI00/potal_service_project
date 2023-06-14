@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring Security LoginPage</title>
+
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Add custom CSS for Login Page -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            margin-top: 100px;
+        }
+        .card {
+            margin-bottom: 20px;
+            border: none;
+            box-shadow: 0 0 15px 0 rgba(0,0,0,.1);
+        }
+        .card-header {
+            background-color: #17a2b8;
+            color: #fff;
+            text-align: center;
+            font-weight: bold;
+            font-size: 24px;
+        }
+        .card-body label {
+            font-weight: bold;
+        }
+        .btn {
+            background-color: #17a2b8;
+            color: #fff;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #117a8b;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">LoginPage</div>
+                <div class="card-body">
+                    <form th:action="@{/login}" method="post">
+                        <div class="form-group">
+                            <label> ID </label>
+                            <input class="form-control" type="text" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label> Password </label>
+                            <input class="form-control" type="password" name="password" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-block">Sign In</button>
+                            <button type="button" onclick="location.href='/signUp';" class="btn btn-block">Sign Up</button>
+                            <button type="button" onclick="location.href='/home';" class="btn btn-block">Cancel</button>
+                        </div>
+                    </form>
+                    <div class="alert alert-danger mt-3" th:if="${param.error}">Invalid ID and Password.</div>
+                    <div class="alert alert-success mt-3" th:if="${param.logout}">You have been logged out.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Bootstrap JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

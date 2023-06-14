@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Potal Service API</title>
+    <!-- 부트스트랩 CSS 파일 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Potal Service API</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a sec:authorize="isAnonymous()"  class="nav-link" href="/login">로그인</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="isAnonymous()" class="nav-link" href="/signup">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a sec:authorize="!isAnonymous()" class="nav-link" href="/spleeter">기능</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <h1 class="mb-4">Potal Service API</h1>
+
+    <p>프로젝트는 대학 과제용으로 시작된 API 서비스 프로젝트입니다. 모든 코드는 main.py 파일에 작성되어 있으며, FastAPI 프레임워크를 사용하여 API 서비스를 구현하였습니다.</p>
+
+    <h2>개발 환경</h2>
+    <ul>
+        <li>Python 3.8</li>
+        <li>requirements.txt</li>
+    </ul>
+
+    <h2>설치 및 실행 방법</h2>
+    <ol>
+        <li>저장소를 클론합니다.</li>
+        <li>파이썬 가상환경 설정(3.8)</li>
+        <li>의존성 설치</li>
+        <li>프로젝트 실행 (uvicorn 사용)</li>
+        <li>localhost/docs 를 통해 API 테스트</li>
+    </ol>
+
+    <h2>코드 요약 설명</h2>
+    <p>위 코드는 FastAPI와 Spleeter를 사용하여 음원 분리 API를 구현하는 예시입니다.</p>
+
+    <p>FastAPI는 웹 애플리케이션을 쉽게 만들 수 있도록 도와주는 Python 웹 프레임워크이며, Spleeter는 딥 러닝 기반의 음원 분리 라이브러리입니다.</p>
+
+    <p>이 예제에서는 /audio API 엔드포인트를 통해 음원 파일을 업로드하고, Spleeter를 사용하여 분리된 음원을 생성합니다. 분리된 음원은 /output API 엔드포인트를 통해 다운로드할 수 있습니다.</p>
+
+    <p>다음은 각 함수의 역할에 대한 간단한 설명입니다.</p>
+    <ul>
+        <li>audio: POST 요청을 처리하는 함수로, 업로드된 음원 파일을 분리하여 저장하고, 분리된 음원 파일의 다운로드 링크를 반환합니다.</li>
+        <li>get_audio: GET 요청을 처리하는 함수로, 분리된 음원 파일을 다운로드할 때 사용합니다.</li>
+        <li>model_name: 사용할 Spleeter 분리 모델을 지정하는 변수입니다.</li>
+        <li>separator: 지정된 분리 모델을 로드하는 객체입니다.</li>
+        <li>output_dir: 분리된 음원 파일을 저장할 디렉토리 경로입니다.</li>
+    </ul>
+
+    <p>이 예시 코드는 다음과 같은 순서로 동작합니다.</p>
+    <ol>
+        <li>audio 함수가 POST 요청을 받아 음원 파일을 저장하고, Spleeter를 사용하여 분리된 음원 파일을 생성합니다.</li>
+        <li>생성된 분리된 음원 파일의 다운로드 링크를 반환합니다.</li>
+        <li>get_audio 함수가 GET 요청을 받아 분리된 음원 파일을 전송합니다.</li>
+    </ol>
+
+    <p>이 코드를 실행하려면, FastAPI와 Spleeter를 설치하고, Python 파일을 실행하면 됩니다. 또한, output_dir 변수에 지정된 경로에 쓰기 권한이 있어야 합니다.</p>
+
+    <p>이 코드를 참고하여, FastAPI와 Spleeter를 사용하여 음원 분리 기능을 구현하는 데 도움이 되길 바랍니다.</p>
+</div>
+
+<!-- 부트스트랩 JS 파일 추가 -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

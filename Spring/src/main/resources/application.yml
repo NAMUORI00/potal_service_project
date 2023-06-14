@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    :driverClassName: org.mariadb.jdbc.Driver
+    :url: jdbc:mariadb://localhost:3306/myjeju
+    :username: myjeju
+    :password: myjeju
+
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+            lob:
+              non_contextual_creation: true
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+    show-sql: true
