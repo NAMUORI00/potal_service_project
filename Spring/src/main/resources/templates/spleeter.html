@@ -1,34 +1,71 @@
 <!DOCTYPE html>
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Hello</title>
+  <meta charset="UTF-8">
+  <title>Hello</title>
+  <!-- 부트스트랩 CDN 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
-  <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-  <br>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand" href="/home">Potal Service API</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a sec:authorize="isAnonymous()"  class="nav-link" href="/login">로그인</a>
+      </li>
+      <li class="nav-item">
+        <a sec:authorize="isAnonymous()" class="nav-link" href="/signup">회원가입</a>
+      </li>
+      <li class="nav-item">
+        <a sec:authorize="!isAnonymous()" class="nav-link" href="/spleeter">기능</a>
+      </li>
+      <li class="nav-item">
+        <a sec:authorize="!isAnonymous()" th:href="@{/logout}" class="nav-link">로그아웃</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container mt-5">
+  <h1 class="mb-4" th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
 
   <!-- SYSTEM 역할 -->
-  <h3 sec:authorize="hasRole('SYSTEM')">Has SYSTEM Role</h3>
-<!--  <h3 sec:authorize="hasRole(T(acc.security.user.enums.UserRole).SYSTEM">Has SYSTEM Role</h3>-->
+  <div sec:authorize="hasRole('SYSTEM')" class="alert alert-primary">
+    Has SYSTEM Role
+  </div>
 
   <!-- USER 역할 -->
-  <h3 sec:authorize="hasRole('USER')">Has USER Role</h3>
+  <div sec:authorize="hasRole('USER')" class="alert alert-secondary">
+    Has USER Role
+  </div>
 
-  <h3 sec:authorize="hasRole('BOARD')">Has BOARD Role</h3>
+  <div sec:authorize="hasRole('BOARD')" class="alert alert-info">
+    Has BOARD Role
+  </div>
 
   <!-- 역할에 상관없이 인증된 사람 -->
-  <h3 sec:authorize="isAuthenticated()">Only Authenticated user can see this Text</h3>
-
-  <div>
-      Authorities : <span sec:authentication="principal.authorities"></span>
+  <div sec:authorize="isAuthenticated()" class="alert alert-warning">
+    Only Authenticated user can see this Text
   </div>
-  <br>
 
-  <p> 시스템 관리자 페이지 <a th:href="@{/system}">SYSTEM</a></p>
+  <div class="mt-4">
+    Authorities : <span sec:authentication="principal.authorities"></span>
+  </div>
+
+  <div class="mt-4">
+    <p> 시스템 관리자 페이지 <a th:href="@{/system}" class="btn btn-primary">SYSTEM</a></p>
+  </div>
 
   <form th:action="@{/logout}" method="post">
-    <input type="submit" value="Logout">
+    <input type="submit" class="btn btn-danger" value="Logout">
   </form>
+</div>
+
+<!-- 부트스트랩 JS 파일 추가 -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
