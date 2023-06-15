@@ -1,20 +1,18 @@
-CREATE TABLE User (
-    user_id VARCHAR(50) NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (user_id)
+CREATE TABLE tb_role (
+     role_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE Role (
-    role_id BIGINT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (role_id)
+CREATE TABLE tb_user (
+     user_id VARCHAR(255) PRIMARY KEY,
+     password VARCHAR(255) NOT NULL,
+     name VARCHAR(255) NOT NULL
 );
 
-CREATE TABLE User_Role (
-   user_id VARCHAR(50) NOT NULL,
-   role_id BIGINT NOT NULL,
-   PRIMARY KEY (user_id, role_id),
-   FOREIGN KEY (user_id) REFERENCES User (user_id),
-   FOREIGN KEY (role_id) REFERENCES Role (role_id)
+CREATE TABLE tb_user_roles (
+    user_id VARCHAR(255),
+    role_id BIGINT,
+    PRIMARY KEY (user_id, role_id),
+    FOREIGN KEY (user_id) REFERENCES tb_user(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (role_id) REFERENCES tb_role(role_id) ON DELETE CASCADE
 );
