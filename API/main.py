@@ -32,6 +32,13 @@ separator = Separator(model_name)
 output_dir = './output'
 
 
+# 경로 문자 처리
+def remove_leading_dot(file_path: str) -> str:
+    if file_path.startswith('.'):
+        return file_path[1:]
+    return file_path
+
+
 # 음원 분리 라우팅
 @app.post("/audio")
 async def audio(file: UploadFile = File(...)):
@@ -47,7 +54,7 @@ async def audio(file: UploadFile = File(...)):
     download_links = {}
     for instrument in ["vocals", "drums", "bass", "piano", "other"]:
         result_file_name = f"{output_dir}/{file_name}/{instrument}.wav"
-        download_links[instrument] = result_file_name
+        download_links[instrument] = remove_leading_dot(result_file_name)
 
     return {
         "message": "Success",
