@@ -2,8 +2,25 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.responses import FileResponse
 from spleeter.separator import Separator
 import os
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# CORS 정책 설정
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+    "http://localhost:3000",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # 분리 모델 (5개의 음원: bass, drums, other, piano, vocals)
 model_name = 'spleeter:5stems'
