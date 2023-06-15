@@ -3,7 +3,8 @@
 ![OIG eJup4](https://github.com/NAMUORI00/potal_service_project/assets/46620366/348ddb28-01be-4bbd-903c-63313b6ed218)
 
 프로젝트는 시작 목적은 개발연습, 대학 과제용으로 시작된 AI API 서비스 프로젝트입니다.
-롤 모델은 [LALAL.ai](https://www.lalal.ai/) 라는 음원분리 AI 서비스를 참고하고 만들었습니다.
+
+프로젝트 참고 모델은 [LALAL.ai](https://www.lalal.ai/) 라는 음원분리 AI 서비스를 참고했습니다.
 
 
 ## 프로젝트 소개
