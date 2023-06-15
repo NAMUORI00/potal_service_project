@@ -30,6 +30,61 @@
 </nav>
 
 <div class="container mt-5">
+
+    <h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="Spleeter_Web_UI_0"></a>Spleeter Web UI</h1>
+    <p class="has-line-data" data-line-start="2" data-line-end="3">본 프로젝트는 Spleeter를 이용하여 음악 파일에서 소리를 분리하는 기능을 웹에서 사용할 수 있도록 구현한 프로젝트입니다.</p>
+    <h2 class="code-line" data-line-start=4 data-line-end=5 ><a id="__4"></a>프로젝트 소개</h2>
+    <p class="has-line-data" data-line-start="6" data-line-end="7">본 프로젝트는 Python 라이브러리인 Spleeter를 이용하여 음악 파일에서 소리를 분리하는 기능을 웹에서 사용할 수 있도록 구현하였습니다. 사용자는 웹 페이지에서 음악 파일을 업로드하고, 분리하고자 하는 소리를 선택하여 분리 결과를 다운로드 받을 수 있습니다.</p>
+    <h2 class="code-line" data-line-start=8 data-line-end=9 ><a id="_8"></a>개발환경</h2>
+    <ul>
+        <li class="has-line-data" data-line-start="10" data-line-end="11">Java 17</li>
+        <li class="has-line-data" data-line-start="11" data-line-end="12">Spring Boot 2.7.8</li>
+        <li class="has-line-data" data-line-start="12" data-line-end="13">Redis</li>
+        <li class="has-line-data" data-line-start="13" data-line-end="14">Thymeleaf</li>
+        <li class="has-line-data" data-line-start="14" data-line-end="15">Spring Security</li>
+        <li class="has-line-data" data-line-start="15" data-line-end="16">Lombok</li>
+        <li class="has-line-data" data-line-start="16" data-line-end="18">Gradle</li>
+    </ul>
+    <h2 class="code-line" data-line-start=18 data-line-end=19 ><a id="__18"></a>프로젝트 구조</h2>
+    <ul>
+        <li class="has-line-data" data-line-start="20" data-line-end="32">
+<pre><code class="has-line-data" data-line-start="21" data-line-end="23">src/main/java
+</code></pre>
+            <ul>
+                <li class="has-line-data" data-line-start="24" data-line-end="25"><code>acc.web</code> : web 컨트롤러 라우팅 클래스</li>
+                <li class="has-line-data" data-line-start="25" data-line-end="26"><code>acc.security</code> : 보안 관련 설정 클래스</li>
+                <li class="has-line-data" data-line-start="26" data-line-end="27"><code>acc.security.user</code> : 사용자 정보와 역할 정보를 다루는 모델 클래스</li>
+                <li class="has-line-data" data-line-start="27" data-line-end="28"><code>acc.security.user.enums</code> : 사용자 역할 정보를 담은 enum 클래스</li>
+                <li class="has-line-data" data-line-start="28" data-line-end="29"><code>acc.security.user.service</code> : 사용자 정보 로딩 및 인증을 담당하는 서비스 클래스</li>
+                <li class="has-line-data" data-line-start="29" data-line-end="30"><code>acc.security.config</code> : 보안 설정 클래스</li>
+                <li class="has-line-data" data-line-start="30" data-line-end="32"><code>acc.security.config.security</code> : 스프링 시큐리티 설정 클래스</li>
+            </ul>
+        </li>
+        <li class="has-line-data" data-line-start="32" data-line-end="41">
+<pre><code class="has-line-data" data-line-start="33" data-line-end="35">src/main/resources
+</code></pre>
+            <ul>
+                <li class="has-line-data" data-line-start="36" data-line-end="37"><code>application.yml</code> : 프로젝트 설정 파일</li>
+                <li class="has-line-data" data-line-start="37" data-line-end="38"><code>data.sql</code> : 예시 데이터 삽입 SQL 파일</li>
+                <li class="has-line-data" data-line-start="38" data-line-end="39"><code>schema.sql</code> : DDL 파일</li>
+                <li class="has-line-data" data-line-start="39" data-line-end="41"><code>templates</code> : 뷰 템플릿 폴더</li>
+            </ul>
+        </li>
+    </ul>
+    <h2 class="code-line" data-line-start=41 data-line-end=42 ><a id="____41"></a>빌드 및 실행 방법</h2>
+    <ul>
+        <li class="has-line-data" data-line-start="43" data-line-end="44"><code>./gradlew build</code> : 빌드</li>
+        <li class="has-line-data" data-line-start="44" data-line-end="46"><code>java -jar build/libs/spleeter-web-ui.jar</code> : 실행</li>
+    </ul>
+    <h2 class="code-line" data-line-start=46 data-line-end=47 ><a id="_46"></a>기타</h2>
+    <ul>
+        <li class="has-line-data" data-line-start="48" data-line-end="49">프로젝트는 local 환경에서 테스트 되어 있으며, 배포할시 뷰 템플릿을 수정해야합니다</li>
+        <li class="has-line-data" data-line-start="49" data-line-end="51">개발 의존성에 자세한 사항은 <code>build.gradle</code>을 참고하세요</li>
+    </ul>
+
+
+    <hr>
+
     <h1 class="mb-4">Potal Service API</h1>
 
     <p>프로젝트는 대학 과제용으로 시작된 API 서비스 프로젝트입니다. 모든 코드는 main.py 파일에 작성되어 있으며, FastAPI 프레임워크를 사용하여 API 서비스를 구현하였습니다.</p>
