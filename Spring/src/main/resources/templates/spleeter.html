@@ -2,10 +2,19 @@
 <html xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="UTF-8">
-  <title>Hello</title>
-  <!-- 부트스트랩 CDN 추가 -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <title>Spleeter</title>
+  <!-- 부트스트랩, ajax CDN 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <style>
+    .audio-wrapper {
+      margin-bottom: 1rem;
+    }
+  </style>
 </head>
+
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
   <a class="navbar-brand" href="/home">Potal Service API</a>
@@ -31,41 +40,120 @@
 </nav>
 
 <div class="container mt-5">
-  <h1 class="mb-4" th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-
-  <!-- SYSTEM 역할 -->
-  <div sec:authorize="hasRole('SYSTEM')" class="alert alert-primary">
-    Has SYSTEM Role
-  </div>
-
-  <!-- USER 역할 -->
-  <div sec:authorize="hasRole('USER')" class="alert alert-secondary">
-    Has USER Role
-  </div>
-
-  <div sec:authorize="hasRole('BOARD')" class="alert alert-info">
-    Has BOARD Role
-  </div>
+  <h1 class="mb-4" th:inline="text">안녕하세요 [[${#httpServletRequest.remoteUser}]]! 님</h1>
 
   <!-- 역할에 상관없이 인증된 사람 -->
   <div sec:authorize="isAuthenticated()" class="alert alert-warning">
-    Only Authenticated user can see this Text
+    로그인 사용자만 기능 페이지에 접근할 수 있습니다.
   </div>
 
-  <div class="mt-4">
-    Authorities : <span sec:authentication="principal.authorities"></span>
-  </div>
-
-  <div class="mt-4">
-    <p> 시스템 관리자 페이지 <a th:href="@{/system}" class="btn btn-primary">SYSTEM</a></p>
-  </div>
-
-  <form th:action="@{/logout}" method="post">
-    <input type="submit" class="btn btn-danger" value="Logout">
-  </form>
 </div>
 
 <!-- 부트스트랩 JS 파일 추가 -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- API 호출부분 렌더링 -->
+<div class="container mt-5">
+  <h1>파일 업로드</h1>
+  <form id="upload-form" enctype="multipart/form-data">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="file-input" name="file">
+      <label class="custom-file-label" for="file-input">파일 선택</label>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">업로드</button>
+  </form>
+
+  <div id="result" class="mt-5"></div>
+</div>
+
+<!-- 오디오 플레이어 부분 -->
+<div class="container mt-5">
+  <h2>오디오 플레이어</h2>
+  <div id="audio-container"></div>
+</div>
+
+<!-- 로딩 모달 -->
+<div class="modal" tabindex="-1" role="dialog" id="loading-modal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">파일 업로드 진행 중</h5>
+      </div>
+      <div class="modal-body">
+        <p>업로드 및 변환 중입니다. 잠시만 기다려주세요.</p>
+      </div>
+      <div class="modal-footer">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- API 호출부분 스크립트 -->
+<script>
+  $(document).ready(function() {
+    $('#upload-form').submit(function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+
+      // 업로드 시작 시 로딩 모달 표시
+      $('#loading-modal').modal('show');
+
+      $.ajax({
+        url: 'http://localhost:8000/audio',
+        type: 'POST',
+        data: formData,
+        processData: false,
+        contentType: false,
+        success: function(response) {
+          // 응답이 완료되면 로딩 모달 숨김
+          $('#loading-modal').modal('hide');
+
+          var filename = response.filename;
+
+          var result = '<div class="alert alert-success" role="alert">';
+          result += '파일이 성공적으로 처리되었습니다.<br>';
+          result += '파일명: ' + filename + '<br>';
+          $('#result').html(result);
+
+          // 오디오 플레이어 생성
+          var downloadLinks = response.download_links;
+          var ret_url = 'http://localhost:8000';
+          $.each(downloadLinks, function(key, value) {
+            var audioWrapper = $('<div class="audio-wrapper"></div>');
+            var audioTitle = $('<h3></h3>').text(filename + ' : ' + key); // 업로드한 파일의 이름과 .wav 파일 이름을 제목으로 출력합니다.
+            var audioPlayer = $('<video controls name="media"></video>')
+                    .append($('<source>')
+                            .attr('src', ret_url + value)
+                            .attr('type', 'audio/wav'));
+            audioWrapper.append(audioTitle);
+            audioWrapper.append(audioPlayer);
+            $('#audio-container').append(audioWrapper);
+          });
+        },
+        error: function(xhr, status, error) {
+          // 오류 발생 시 로딩 모달 숨김
+          $('#loading-modal').modal('hide');
+
+          var result = '<div class="alert alert-danger" role="alert">';
+          result += '파일 업로드 중 오류가 발생하였습니다.<br>';
+          result += '상태 코드: ' + xhr.status + '<br>';
+          result += '오류 메시지: ' + error + '</div>';
+          $('#result').html(result);
+        }
+      });
+    });
+    // 파일 선택 시 파일명 출력
+    $('.custom-file-input').on('change', function() {
+      var fileName = $(this).val().split('\\').pop();
+      $(this).siblings('.custom-file-label').addClass('selected').html(fileName);
+    });
+  });
+</script>
+
+
+
 </body>
 </html>
