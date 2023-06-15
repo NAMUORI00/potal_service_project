@@ -11,7 +11,7 @@
 
 본 프로젝트는 Spleeter와 FastAPI 프레임워크를 사용하여 음원 분리 기능을 웹과 API로 구현한 프로젝트입니다.
 
-- [Spleeter Web UI](https://github.com/NAMUORI00/potal_service_project/blob/main/Spring/) : Python 라이브러리인 Spleeter를 이용하여 음악 파일에서 소리를 분리하는 기능을 웹에서 사용할 수 있도록 구현하였습니다. 사용자는 웹 페이지에서 음악 파일을 업로드하고, 분리하고자 하는 소리를 선택하여 분리 결과를 다운로드 받을 수 있습니다.
+- [Spleeter Web UI](https://github.com/NAMUORI00/potal_service_project/blob/main/Spring/) : Python 라이브러리인 Spleeter를 이용하여 음악 파일에서 소리를 분리하는 기능을 스프링부트 기반 웹에서 호출하게 만들어졌습니다
 
 - [Portal Service API](https://github.com/NAMUORI00/potal_service_project/blob/main/API/) : FastAPI 프레임워크를 사용하여 음원 분리 API를 구현한 예시입니다. `/audio` API 엔드포인트를 통해 음원 파일을 업로드하고, Spleeter를 사용하여 분리된 음원을 생성합니다. 분리된 음원은 `/output` API 엔드포인트를 통해 다운로드할 수 있습니다.
 
